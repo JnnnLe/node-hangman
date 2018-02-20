@@ -34,8 +34,9 @@ var hangman = {
     //At the start of a new game
     newGame: function() {
         if (this.guessesRemaining === 9) {
+            console.log('\n*****************\n');
             console.log('Let\'s begin!');
-            console.log('*****************');
+            console.log('\n*****************\n');
             var randNum = Math.floor(Math.random() * this.wordBank.length);
             this.currentWord = new Word(this.wordBank[randNum]);
             this.currentWord.getLetters();
@@ -50,6 +51,72 @@ var hangman = {
 
     resetGuessesRemaining: function() {
         this.guessesRemaining = 9;
+    },
+
+    promptUser: function() {
+        var that = this;
+        //begins prompt
+        inquirer.prompt([{
+            name: 'chosenLtr',
+            type: 'input',
+            message: 'Please choose a letter: ',
+            validate: function(value) {
+                if (isLetter(value)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }]).then(function(ltr) {
+            var letterReturned = (ltr.chosenLtr).toUpperCase();
+            var guessedAlready = false;
+            for (var i = 0; i < that.guessedLetters.length; i++) {
+                if (letterReturned === that.guessedLetters[i]) {
+                    guessedAlready = true;
+                }
+            }
+            //run through entire function, else reprompt user
+            if (guessedAlready === false) {
+                that.guessedLetters.push(letterReturned);
+
+                var found = that.currentWord.checkIfLetterFound(letterReturned);
+                if (found === 0) {
+                    console.log('You guessed incorrectly.');
+                    that.guessesRemaining--;
+                    that.display++;
+                    console.log('Guesses remaining: ' + that.guessesRemaining);
+                    console.log('\n*******************\n');
+                    console.log(that.currentWord.renderWord());
+                    console.log('\n*******************\n');
+
+                    console.log('Letters guessed: ' + that.guessedLetters);
+                } else {
+                    console.log('Yes! You guessed correctly!');
+                    //checks to see if user won
+                    if (that.currentWord.didWeFindTheWord() === true) {
+                        console.log(that.currentWord.renderWord());
+                        console.log('Congratulations, you won the game! It looks like you are a natural chemist!');
+                        that.startGame();
+                    } else {
+                        // display the user how many guesses remaining
+                        console.log('Guesses remaining: ' + that.guessesRemaining);
+                        console.log(that.currentWord.renderWord());
+                        console.log('\n*******************\n');
+                        console.log('Letters guessed: ' + that.guessedLetters + ', ');
+                    }
+                }
+                if (that.guessesRemaining > 0 && that.currentWord.wordFound === false) {
+                    that.promptUser();
+                } else if (that.guessesRemaining === 0) {
+                    console.log('This is Game Over for you, GG.');
+                    console.log('The word you guessed incorrectly was: ' + that.currentWord.word);
+                    that.startGame();
+                }
+            } else {
+                console.log('You\'ve guessed that letter already, try again.');
+                that.promptUser();
+            }
+        });
     }
 
 //end of hangman    
