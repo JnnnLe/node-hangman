@@ -14,6 +14,18 @@ function Word(wrd) {
     }
   };
 
-//end of Word constructor  
+  //found the current word
+  this.didWeFindTheWord = function() {
+    if (this.letters.every(function(lttr) {
+      return lttr.appear === true;
+    }))
+    {
+      this.wordFound = true;
+      return true;
+    }
+  };
+
+//end of Word constructor
 }
+
 module.exports = Word;
