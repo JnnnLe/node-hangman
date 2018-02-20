@@ -25,6 +25,29 @@ function Word(wrd) {
     }
   };
 
+  this.checkIfLetterFound = function(guessedLetter) {
+    var whatToReturn = 0;
+    this.letters.forEach(function(lttr){
+      if(lttr.letter === guessedLetter){
+        lttr.appear = true;
+        whatToReturn++;
+      }
+    });
+    //if guessLetter matches Letter property, the letter object should be shown
+    return whatToReturn;
+  };
+
+  this.renderWord = function() {
+    var display = '';
+    //render the word based on if letters are found or not
+    that.letters.forEach(function(lttr) {
+      var currentLetter = lttr.renderLetter();
+      display+= currentLetter;
+    });
+
+    return display;
+  };  
+
 //end of Word constructor
 }
 
