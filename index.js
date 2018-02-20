@@ -29,6 +29,27 @@ var hangman = {
                 console.log('Maybe we can play another time.');
             }
         })
+    },
+
+    //At the start of a new game
+    newGame: function() {
+        if (this.guessesRemaining === 9) {
+            console.log('Let\'s begin!');
+            console.log('*****************');
+            var randNum = Math.floor(Math.random() * this.wordBank.length);
+            this.currentWord = new Word(this.wordBank[randNum]);
+            this.currentWord.getLetters();
+            //display current word as blanks
+            console.log(this.currentWord.renderWord());
+            this.promptUser();
+        } else {
+            this.resetGuessesRemaining();
+            this.newGame();
+        }
+    },
+
+    resetGuessesRemaining: function() {
+        this.guessesRemaining = 9;
     }
 
 //end of hangman    
