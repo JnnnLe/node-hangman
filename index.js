@@ -21,7 +21,21 @@ var hangman = {
         inquirer.prompt([{
             name: 'play',
             type: 'confirm',
-            message: 'Would you like to play hangman, Chemistry Edition?'
+            message: 
+            
+'    o' + '\n' +                                         
+'    o' + '\n' +                                         
+'   ___              ___  ___  ___  ___            ' + '\n' +
+'   | |        ._____|_|__|_|__|_|__|_|_____.      ' + '\n' +
+'   | |        |__________________________|%|      ' + '\n' + 
+'   |o|          | | |%|  | |  | |  |~| | |        ' + '\n' +
+'  /. .\          | | |%|  | |  |~|  |#| | |       ' + '\n' +
+' /  o  \         | | :%:  :~:  : :  :#: | |       ' + '\n' +
+':____o__:     ._|_|_."    "    "    "._|_|_.      ' + '\n' + 
+' ._____.      |___|%|                |___|%|      ' + '\n' +
+                                                    '\n \n' +
+                                                   + '\n \n'
+             + 'Would you like to play hangman, Chemistry Edition?'
         }]).then(function(answer) {
             if (answer.play) {
                 that.newGame();
@@ -34,9 +48,9 @@ var hangman = {
     //At the start of a new game
     newGame: function() {
         if (this.guessesRemaining === 9) {
-            console.log('\n*****************\n');
-            console.log('Let\'s begin!');
-            console.log('\n*****************\n');
+            console.log('\n*************************************************************\n');
+            console.log('Let\'s begin! \nLet\'s see how well you know the periodic elements.');
+            console.log('\n********************************************************************\n');
             var randNum = Math.floor(Math.random() * this.wordBank.length);
             this.currentWord = new Word(this.wordBank[randNum]);
             this.currentWord.getLetters();
@@ -85,9 +99,9 @@ var hangman = {
                     that.guessesRemaining--;
                     that.display++;
                     console.log('Guesses remaining: ' + that.guessesRemaining);
-                    console.log('\n*******************\n');
+                    console.log('\n**************************************************************\n');
                     console.log(that.currentWord.renderWord());
-                    console.log('\n*******************\n');
+                    console.log('\n**************************************************************\n');
 
                     console.log('Letters guessed: ' + that.guessedLetters);
                 } else {
@@ -95,19 +109,22 @@ var hangman = {
                     //checks to see if user won
                     if (that.currentWord.didWeFindTheWord() === true) {
                         console.log(that.currentWord.renderWord());
+                        console.log('=============================', Game.newWord.element[that.currentWord.word], '=============================');
                         console.log('Congratulations, you won the game! It looks like you are a natural chemist!');
                         that.startGame();
                     } else {
                         // display the user how many guesses remaining
                         console.log('Guesses remaining: ' + that.guessesRemaining);
                         console.log(that.currentWord.renderWord());
-                        console.log('\n*******************\n');
+                        console.log('\n**************************************************************\n');
                         console.log('Letters guessed: ' + that.guessedLetters + ', ');
                     }
                 }
                 if (that.guessesRemaining > 0 && that.currentWord.wordFound === false) {
                     that.promptUser();
                 } else if (that.guessesRemaining === 0) {
+                  
+
                     console.log('This is Game Over for you, GG.');
                     console.log('The word you guessed incorrectly was: ' + that.currentWord.word);
                     that.startGame();
