@@ -22,7 +22,7 @@ var hangman = {
             name: 'play',
             type: 'confirm',
             message: 
-            
+'\n \n' + 'WELCOME to J. Lê Chem Hangman Game; shout out to CAL and Berkeley Labs! \n' +            
 '    o' + '\n' +                                         
 '    o' + '\n' +                                         
 '   ___              ___  ___  ___  ___                ___' + '\n' +
@@ -33,7 +33,7 @@ var hangman = {
 ' /  o  \         | | :%:  :~:  : :  :#: | |            |_|' + '\n' +
 ':____o__:     ._|_|_."    "    "    "._|_|_.       ___" "___' + '\n' + 
 ' ._____.      |___|%|                |___|%|      |_________|' + '\n' +
-                                                    '\n \n' +
+                                                    '\n \n' + 
                                                    + '\n \n'
              + 'Would you like to play hangman, Chemistry Edition?'
         }]).then(function(answer) {
